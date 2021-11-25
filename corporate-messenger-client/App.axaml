@@ -8,6 +8,7 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme Mode="Light" />
+        <FluentTheme Mode="Dark" />
+        <StyleInclude Source="avares://corporate-messenger-client/Styles/Icons.axaml" />
     </Application.Styles>
 </Application>

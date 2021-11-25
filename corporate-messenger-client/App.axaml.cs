@@ -19,7 +19,7 @@ namespace corporate_messenger_client
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new MainWindowViewModel(new LoginViewModel()),
                 };
             }
 

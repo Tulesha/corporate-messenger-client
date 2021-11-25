@@ -2,6 +2,11 @@
 {
     public class CreateChatResponse
     {
+        public CreateChatResponse(string statusMessage)
+        {
+            StatusMessage = statusMessage;
+        }
+
         public string StatusMessage { get; private set; }
 
         public enum StatusTemplates

@@ -1,0 +1,55 @@
+﻿<UserControl
+    Height="200"
+    Width="300"
+    d:DesignHeight="500"
+    d:DesignWidth="400"
+    mc:Ignorable="d"
+    x:Class="corporate_messenger_client.Views.LoginView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:corporate_messenger_client.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.DataContext>
+        <vm:LoginViewModel />
+    </UserControl.DataContext>
+    <Grid RowDefinitions="Auto, Auto" VerticalAlignment="Center">
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            Margin="10"
+            VerticalAlignment="Center">
+            <TextBox
+                HorizontalAlignment="Center"
+                Margin="0,0,0,5"
+                Text="{Binding Username}"
+                Watermark="Login" />
+            <TextBox
+                HorizontalAlignment="Center"
+                Margin="0,5,0,0"
+                PasswordChar="*"
+                Text="{Binding Password}"
+                Watermark="Password" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Margin="10"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding SignInCommand}"
+                CommandParameter="{Binding $parent[Window]}"
+                Margin="0,0,5,0"
+                ToolTip.Tip="Sign in">
+                <PathIcon Data="{StaticResource sign_in}" />
+            </Button>
+            <Button
+                Command="{Binding SignUpCommand}"
+                CommandParameter="{Binding $parent[Window]}"
+                Margin="5,0,0,0"
+                ToolTip.Tip="Sign up">
+                <PathIcon Data="{StaticResource sign_up}" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
