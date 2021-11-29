@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace corporate_messenger_client.Models.Messenger
 {
@@ -10,7 +11,7 @@ namespace corporate_messenger_client.Models.Messenger
             Messages = messages;
         }
 
-        public string ChatName { get; private set; }
-        public List<Message> Messages { get; private set; }
+        public string ChatName { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

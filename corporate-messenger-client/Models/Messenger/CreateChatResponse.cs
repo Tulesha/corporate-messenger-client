@@ -11,9 +11,9 @@
 
         public enum StatusTemplates
         {
-            AlreadyExists,
-            NotEnoughMembers,
-            Successful
+            ALREADY_EXISTS,
+            NOT_ENOUGH_MEMBERS,
+            SUCCESSFUL
         }
     }
 }

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
 using corporate_messenger_client.Models.Auth;
-using MessageBox.Avalonia.DTO;
-using MessageBox.Avalonia.Enums;
+using corporate_messenger_client.Models.MessageBox;
+using Newtonsoft.Json;
 using ReactiveUI;
 
 namespace corporate_messenger_client.ViewModels
@@ -31,22 +28,13 @@ namespace corporate_messenger_client.ViewModels
             {
                 try
                 {
-                    var postLogin = await PostLogin();
+                    var tokens = await PostLogin();
+                    ((MainWindowViewModel) window.DataContext!).Content = new ChatViewModel(tokens, _client, window);
                 }
-                catch (HttpRequestException e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    var errorMessageBox = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
-                        new MessageBoxStandardParams
-                        {
-                            ButtonDefinitions = ButtonEnum.Ok,
-                            ContentTitle = "Login error",
-                            ContentMessage = $"Error: {e.Message}",
-                            Icon = Icon.Error,
-                            Style = Style.DarkMode,
-                            WindowStartupLocation = WindowStartupLocation.CenterScreen
-                        }
-                    );
+                    var errorMessageBox = CreateMessageBox.CreateErrorMessageMessageBox("Login error", e);
                     await errorMessageBox.ShowDialog(window);
                 }
             }, enableCommands);
@@ -55,22 +43,13 @@ namespace corporate_messenger_client.ViewModels
             {
                 try
                 {
-                    var postSignUp = await PostSignUp();
+                    var tokens = await PostSignUp();
+                    ((MainWindowViewModel) window.DataContext!).Content = new ChatViewModel(tokens, _client, window);
                 }
-                catch (HttpRequestException e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    var errorMessageBox = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
-                        new MessageBoxStandardParams
-                        {
-                            ButtonDefinitions = ButtonEnum.Ok,
-                            ContentTitle = "Sign up error",
-                            ContentMessage = $"Error: {e.Message}",
-                            Icon = Icon.Error,
-                            Style = Style.DarkMode,
-                            WindowStartupLocation = WindowStartupLocation.CenterScreen
-                        }
-                    );
+                    var errorMessageBox = CreateMessageBox.CreateErrorMessageMessageBox("Sign up error", e);
                     await errorMessageBox.ShowDialog(window);
                 }
             }, enableCommands);
@@ -88,14 +67,14 @@ namespace corporate_messenger_client.ViewModels
             set => this.RaiseAndSetIfChanged(ref _password, value);
         }
 
-        public ICommand SignInCommand { get; private set; }
-        public ICommand SignUpCommand { get; private set; }
+        public ICommand SignInCommand { get; }
+        public ICommand SignUpCommand { get; }
 
         private async Task<GeneratedTokens?> PostLogin()
         {
             var request = new LoginRequest(Username, Password);
-            HttpResponseMessage responseMessage = await _client.PostAsync(LoginEndpoint,
-                new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
+            HttpResponseMessage responseMessage = await _client?.PostAsync(LoginEndpoint,
+                new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"))!;
             if (responseMessage.IsSuccessStatusCode)
             {
                 return await responseMessage.Content.ReadFromJsonAsync<GeneratedTokens>();
@@ -107,19 +86,19 @@ namespace corporate_messenger_client.ViewModels
         private async Task<GeneratedTokens?> PostSignUp()
         {
             var request = new LoginRequest(Username, Password);
-            HttpResponseMessage responseMessage = await _client.PostAsync(SignUpEndpoint,
-                new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
+            HttpResponseMessage responseMessage = await _client?.PostAsync(SignUpEndpoint,
+                new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"))!;
             if (responseMessage.IsSuccessStatusCode)
             {
                 return await responseMessage.Content.ReadFromJsonAsync<GeneratedTokens>();
             }
-            
+
             throw new HttpRequestException(responseMessage.StatusCode.ToString());
         }
 
 
         private string? _username;
         private string? _password;
-        private readonly HttpClient _client;
+        private readonly HttpClient? _client;
     }
 }

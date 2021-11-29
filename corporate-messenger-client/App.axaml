@@ -10,5 +10,6 @@
     <Application.Styles>
         <FluentTheme Mode="Dark" />
         <StyleInclude Source="avares://corporate-messenger-client/Styles/Icons.axaml" />
+        <StyleInclude Source="avares://corporate-messenger-client/Styles/Styles.axaml" />
     </Application.Styles>
 </Application>

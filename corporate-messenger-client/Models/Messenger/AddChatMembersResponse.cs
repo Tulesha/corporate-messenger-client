@@ -11,8 +11,8 @@
 
         public enum StatusTemplates
         {
-            NothingToAdd,
-            Successful
+            NOTHING_TO_ADD,
+            SUCCESSFUL
         }
     }
 }

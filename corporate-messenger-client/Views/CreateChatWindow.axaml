@@ -1,18 +1,24 @@
-﻿<UserControl
-    Height="200"
+﻿<Window
+    Background="Transparent"
+    CanResize="False"
+    Height="150"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Create chat"
+    TransparencyLevelHint="AcrylicBlur"
     Width="300"
-    d:DesignHeight="500"
-    d:DesignWidth="400"
+    WindowStartupLocation="CenterOwner"
+    d:DesignHeight="150"
+    d:DesignWidth="300"
     mc:Ignorable="d"
-    x:Class="corporate_messenger_client.Views.LoginView"
+    x:Class="corporate_messenger_client.Views.CreateChatWindow"
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:corporate_messenger_client.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <UserControl.DataContext>
-        <vm:LoginViewModel />
-    </UserControl.DataContext>
+    <Window.DataContext>
+        <vm:CreateChatWindowViewModel />
+    </Window.DataContext>
 
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -33,35 +39,21 @@
                 <TextBox
                     HorizontalAlignment="Center"
                     Margin="0,0,0,5"
-                    Text="{Binding Username}"
-                    Watermark="Login" />
+                    Text="{Binding ChatName}"
+                    Watermark="Chat name" />
                 <TextBox
                     HorizontalAlignment="Center"
                     Margin="0,5,0,0"
-                    PasswordChar="*"
-                    Text="{Binding Password}"
-                    Watermark="Password" />
+                    Text="{Binding Members}"
+                    Watermark="Members (sep ;)" />
             </StackPanel>
-            <StackPanel
+            <Button
+                Command="{Binding CreateChat}"
+                CommandParameter="{Binding $parent[Window]}"
+                Content="Create"
                 Grid.Row="1"
-                HorizontalAlignment="Center"
-                Margin="10"
-                Orientation="Horizontal">
-                <Button
-                    Command="{Binding SignInCommand}"
-                    CommandParameter="{Binding $parent[Window]}"
-                    Margin="0,0,5,0"
-                    ToolTip.Tip="Sign in">
-                    <PathIcon Data="{StaticResource sign_in}" />
-                </Button>
-                <Button
-                    Command="{Binding SignUpCommand}"
-                    CommandParameter="{Binding $parent[Window]}"
-                    Margin="5,0,0,0"
-                    ToolTip.Tip="Sign up">
-                    <PathIcon Data="{StaticResource sign_up}" />
-                </Button>
-            </StackPanel>
+                HorizontalAlignment="Right"
+                Margin="10" />
         </Grid>
     </Panel>
-</UserControl>
+</Window>

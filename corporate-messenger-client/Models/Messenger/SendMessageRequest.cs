@@ -1,14 +1,18 @@
-﻿namespace corporate_messenger_client.Models.Messenger
+﻿using Newtonsoft.Json;
+
+namespace corporate_messenger_client.Models.Messenger
 {
     public class SendMessageRequest
     {
-        public SendMessageRequest(string chatName, string messageContest)
+        public SendMessageRequest(string? chatName, string? messageContent)
         {
             ChatName = chatName;
-            MessageContest = messageContest;
+            MessageContent = messageContent;
         }
 
-        public string ChatName { get; private set; }
-        public string MessageContest { get; private set; }
+        [JsonProperty("chatName")]
+        public string? ChatName { get; private set; }
+        [JsonProperty("messageContent")]
+        public string? MessageContent { get; private set; }
     }
 }

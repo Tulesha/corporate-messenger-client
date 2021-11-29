@@ -3,7 +3,7 @@
     public class GeneratedTokens
     {
         public GeneratedTokens(string sessionToken, long sessionExpiresOn, string refreshToken, long refreshExpiresOn,
-            string username)
+            string? username)
         {
             SessionToken = sessionToken;
             SessionExpiresOn = sessionExpiresOn;
@@ -18,6 +18,6 @@
         public string RefreshToken { get; private set; }
         public long RefreshExpiresOn { get; private set; }
 
-        public string Username { get; private set; }
+        public string? Username { get; private set; }
     }
 }

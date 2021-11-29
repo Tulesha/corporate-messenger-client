@@ -1,0 +1,45 @@
+﻿<Window
+    Background="Transparent"
+    CanResize="False"
+    Height="100"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Add members to chat"
+    TransparencyLevelHint="AcrylicBlur"
+    Width="300"
+    WindowStartupLocation="CenterOwner"
+    d:DesignHeight="100"
+    d:DesignWidth="300"
+    mc:Ignorable="d"
+    x:Class="corporate_messenger_client.Views.AddMembersToChatWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    MaterialOpacity="0.65"
+                    TintColor="Black"
+                    TintOpacity="1" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <Grid RowDefinitions="Auto, Auto" VerticalAlignment="Center">
+            <TextBox
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Margin="10"
+                Text="{Binding Members}"
+                Watermark="Members (sep ;)" />
+            <Button
+                Command="{Binding AddMembersCommand}"
+                CommandParameter="{Binding $parent[Window]}"
+                Content="Add members"
+                Grid.Row="1"
+                HorizontalAlignment="Right"
+                Margin="10" />
+        </Grid>
+    </Panel>
+</Window>

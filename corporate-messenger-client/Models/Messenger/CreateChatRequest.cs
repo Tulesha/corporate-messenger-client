@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace corporate_messenger_client.Models.Messenger
 {
@@ -10,7 +11,9 @@ namespace corporate_messenger_client.Models.Messenger
             Members = members;
         }
 
+        [JsonProperty("chatName")]
         public string ChatName { get; private set; }
+        [JsonProperty("members")]
         public List<string> Members { get; private set; }
     }
 }

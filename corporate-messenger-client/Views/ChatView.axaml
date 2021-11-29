@@ -1,0 +1,90 @@
+﻿<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="corporate_messenger_client.Views.ChatView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:m="clr-namespace:corporate_messenger_client.Models.Messenger"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    MaterialOpacity="0.65"
+                    TintColor="Black"
+                    TintOpacity="1" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <TabControl
+            Items="{Binding TabItemChats}"
+            Margin="10"
+            SelectedContent="{Binding SelectedTabItemChat}"
+            SelectedItem="{Binding SelectedTabItemChatModel}">
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid ColumnDefinitions="Auto, Auto, *">
+                        <Grid Grid.Column="0" RowDefinitions="*, Auto">
+                            <ScrollViewer
+                                Grid.Row="0"
+                                HorizontalScrollBarVisibility="Auto"
+                                Margin="5"
+                                VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter
+                                    ItemTemplate="{TemplateBinding ItemTemplate}"
+                                    Items="{TemplateBinding Items}"
+                                    Margin="{TemplateBinding Margin}"
+                                    Name="PART_ItemsPresenter">
+                                    <ItemsPresenter.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsPresenter.ItemsPanel>
+                                </ItemsPresenter>
+                            </ScrollViewer>
+                            <Button
+                                Command="{Binding CreateChatCommand}"
+                                Grid.Row="1"
+                                Margin="0,5,0,0">
+                                <TextBlock Text="Create chat" TextTrimming="CharacterEllipsis" />
+                            </Button>
+                        </Grid>
+                        <GridSplitter Grid.Column="1" Margin="5" />
+                        <ContentPresenter
+                            Content="{TemplateBinding SelectedContent}"
+                            ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+                            Grid.Column="2"
+                            Margin="5"
+                            Name="PART_SelectedContentHost" />
+                    </Grid>
+                </ControlTemplate>
+            </TabControl.Template>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}" TextTrimming="CharacterEllipsis">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    Command="{Binding $parent[UserControl].DataContext.AddChatMembersCommand}"
+                                    CommandParameter="{Binding $parent[TabItem]}"
+                                    Header="Add members">
+                                    <MenuItem.Icon>
+                                        <PathIcon Data="{StaticResource people_add_regular}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="m:TabItemChatViewModel">
+                    <UserControl Content="{Binding ChatViewModel}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Panel>
+</UserControl>

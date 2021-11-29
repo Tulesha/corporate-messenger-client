@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace corporate_messenger_client.Models.Messenger
 {
     public class GetUserChatsResponse
     {
-        public GetUserChatsResponse(List<Chat> userChats)
+        public GetUserChatsResponse(ObservableCollection<Chat> userChats)
         {
             UserChats = userChats;
         }
 
-        public List<Chat> UserChats { get; private set; }
+        public ObservableCollection<Chat> UserChats { get; private set; }
     }
 }
